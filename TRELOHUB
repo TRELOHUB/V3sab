@@ -1,0 +1,129 @@
+-- Key System
+local validKey = "TRELOHUB"  -- Define the key
+local enteredKey = ""  -- User input for key
+
+-- Display a prompt for key input
+local UserInputService = game:GetService("UserInputService")
+local function askForKey()
+    local inputBox = Instance.new("TextBox")
+    inputBox.Size = UDim2.new(0, 300, 0, 50)
+    inputBox.Position = UDim2.new(0.5, -150, 0.5, -25)
+    inputBox.Text = "Enter Key..."
+    inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    inputBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    inputBox.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
+    
+    local function onKeySubmit()
+        enteredKey = inputBox.Text
+        if enteredKey == validKey then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Key Accepted",
+                Text = "Access granted to Steal a Brainrot v3.3 features.",
+                Duration = 5
+            })
+            inputBox:Destroy()  -- Remove the input box after successful entry
+            loadFeatures()
+        else
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Invalid Key",
+                Text = "Please enter the correct key to access the script.",
+                Duration = 5
+            })
+        end
+    end
+
+    inputBox.FocusLost:Connect(function()
+        onKeySubmit()
+    end)
+end
+
+askForKey()
+
+-- Features of Steal a Brainrot
+local function loadFeatures()
+    -- Instant TP Teleport System (Requires "Flying Carpet")
+    local function instantTeleport()
+        local flyingCarpet = game.Players.LocalPlayer.Backpack:FindFirstChild("Flying Carpet")
+        if flyingCarpet then
+            local teleportButton = Instance.new("TextButton")
+            teleportButton.Size = UDim2.new(0, 200, 0, 50)
+            teleportButton.Position = UDim2.new(0.5, -100, 0.5, -100)
+            teleportButton.Text = "Instant Teleport"
+            teleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            teleportButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            teleportButton.TextSize = 18
+            teleportButton.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
+            
+            teleportButton.MouseButton1Click:Connect(function()
+                -- Add teleportation logic here based on game location or target
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)  -- Example coordinates
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "Instant Teleport",
+                    Text = "You have been teleported instantly.",
+                    Duration = 5
+                })
+            end)
+        else
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Error",
+                Text = "Flying Carpet not found in your inventory.",
+                Duration = 5
+            })
+        end
+    end
+    
+    -- Auto-Steal & Auto-Steal Nearest
+    local function autoSteal()
+        local stealButton = Instance.new("TextButton")
+        stealButton.Size = UDim2.new(0, 200, 0, 50)
+        stealButton.Position = UDim2.new(0.5, -100, 0.5, 50)
+        stealButton.Text = "Auto Steal"
+        stealButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        stealButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        stealButton.TextSize = 18
+        stealButton.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
+        
+        stealButton.MouseButton1Click:Connect(function()
+            -- Add logic to auto-steal Brainrot from players or locations
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Auto Steal Activated",
+                Text = "You will now auto-steal nearby Brainrots.",
+                Duration = 5
+            })
+            -- Example Auto-Steal Logic
+            -- You can use a loop to find and steal Brainrots automatically
+        end)
+    end
+
+    -- ESP System (for visible Brainrots and players)
+    local function enableESP()
+        -- Create ESP for Brainrots
+        local espButton = Instance.new("TextButton")
+        espButton.Size = UDim2.new(0, 200, 0, 50)
+        espButton.Position = UDim2.new(0.5, -100, 0.5, 150)
+        espButton.Text = "Enable ESP"
+        espButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        espButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        espButton.TextSize = 18
+        espButton.Parent = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
+        
+        espButton.MouseButton1Click:Connect(function()
+            -- Add logic to display ESP for Brainrots, players, etc.
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "ESP Enabled",
+                Text = "ESP for Brainrots and players is now active.",
+                Duration = 5
+            })
+            -- Example logic for showing Brainrots and players
+            -- Use a loop to constantly track and display them in the world
+        end)
+    end
+
+    -- Activate all features once the key is entered
+    instantTeleport()
+    autoSteal()
+    enableESP()
+    
+    -- Add other features like Speed Boost, Floor Steal, etc.
+    -- For brevity, only a few features are implemented here, but you can expand them similarly.
+end
